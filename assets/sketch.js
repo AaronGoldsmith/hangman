@@ -78,8 +78,8 @@ class Man
 
 }
 
-let man;
-let secretWord 
+var man;
+var secretWord; 
 function drawHanger(){
   	strokeWeight(8);
     stroke(0);
@@ -117,7 +117,7 @@ function setup() {
 
 
   man = new Man(width/2,height/2-50);
-  secretWord = wordlist.get();
+  secretWord = wordlist.get().split("");
   console.log(secretWord);
   for(var j = 0;j<secretWord.length;j++){
   	progressWord.push("-");
@@ -138,12 +138,7 @@ function draw() {
 function checkLetter(L){
     return (alph.indexOf(L)>=0 && hist.indexOf(L)<0 && progressWord.indexOf(L)<0);
 }
-function indicesOf(arr,val){
-    var c = [];
-    for(var i = 0;i<arr.length;i++){
-        
-    }
-}
+
 
 function update(){
     var h = "";
@@ -154,25 +149,44 @@ function update(){
     progressWord.forEach(char =>{
         p += ("<li class='text-success'>"+char+"</li>");
     });
-     document.getElementById("history").innerHTML = h;
-     document.getElementById("solvedWord").innerHTML = p;
+     document.querySelector("#history").innerHTML = h;
+     document.querySelector("#solvedWord").innerHTML = p;
 }
+function getIndices(arr,lettr){
+    var ind = [];
+    for(var i = 0;i<arr.length;i++){
+     if(arr[i]==lettr){
+       ind.push(i);
+     }	
+    }
+    return ind;
+ }
+ 
 document.onkeyup = function(event){
-
+        var letter = event.key
         // check if letter is in alphabet 
         // check if letter has been pressed already
-		if(checkLetter(event.key) && man.deathCount<=5){
-              hist.push(event.key);
-              var sindex = secretWord.indexOf(event.key);
-              if(sindex==-1){
+		if(checkLetter(letter) && man.deathCount<=5){
+              hist.push(letter);
+              console.log(letter)
+
+              
+              if(secretWord.indexOf(letter)==-1){
                 man.deathCount++;     
               }
               else{
-                progressWord[sindex] = event.key;
-                hist.pop();
+                var indices = getIndices(secretWord,letter)
+                for(var index = 0;index< indices.length;index++){
+                    progressWord[indices[index]] = letter;
+                }
+                // don't want user to see a letter that they correctly guessed
+                // next to all the ones they guessed incorrectly
+                hist.pop(); 
+
               }
+              update();
+
            }
-		update();
    
 			
 }
