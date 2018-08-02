@@ -10,6 +10,13 @@ html,body{
 body{
     background: #333333aa;
 }
+.modal{
+    font-family: 'Gloria Hallelujah', cursive;
+    background: #333333aa
+}
+p{
+    font-size: 1.4em;
+}
 h1{
     font-size: 2.6em;
     font-family: 'Sriracha', cursive;
@@ -17,14 +24,27 @@ h1{
     background: #fff;
     user-select: none;
   }
-  span{padding: 40px;}
 li{
     display: inline-block;
     padding-right: 20px;
     font-size: 3em;
    
 }
-
+.mistakes li{
+    color: red;
+}
 .border{
-    border: 2px solid #121212aa
+    border: 3px solid #121212;
+    box-shadow: 0px 3px 15px 2px #000
+}
+canvas{
+    border: 1px solid rgba(100,0,20,0.125);
+    box-shadow: 0px 0px 5px 2px #000
+}
+borderDanger{
+    box-shadow: 0px 0px 15px 2px #FF000eaa
+}
+#history{
+    width: 100%;
+    height: 100px;
 }

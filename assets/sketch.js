@@ -2,7 +2,7 @@
  let alph = "abcdefghijklmnopqrstuvwxyz";	
  let hist = [];
  let progressWord = [];
-
+ var canvas;
 class Man
 {
   	constructor(x,y){
@@ -109,7 +109,8 @@ function drawNoose(x,y){
 	
 }
 function setup() {
-  var canvas = createCanvas(400, 400);
+
+  canvas = createCanvas(400, 400);
   canvas.parent('canvas-holder');
   strokeWeight(2);
   stroke(0);
@@ -118,7 +119,7 @@ function setup() {
 
   man = new Man(width/2,height/2-50);
   secretWord = wordlist.get().split("");
-  console.log(secretWord);
+//   console.log(secretWord); // use for testing
   for(var j = 0;j<secretWord.length;j++){
   	progressWord.push("-");
   }  
@@ -143,6 +144,10 @@ function checkLetter(L){
 function update(){
     var h = "";
     var p = "";
+    if(hist.length==0){
+        document.querySelector("#history").innerHTML = "<p> Type a letter to see if it's in the word </p>";
+
+    }
     hist.forEach(letter => {
         h += ("<li class='text-danger'>"+ letter+"</li>");
     });
@@ -162,6 +167,9 @@ function getIndices(arr,lettr){
     return ind;
  }
  
+
+
+ 
 document.onkeyup = function(event){
         var letter = event.key
         // check if letter is in alphabet 
@@ -172,7 +180,9 @@ document.onkeyup = function(event){
 
               
               if(secretWord.indexOf(letter)==-1){
-                man.deathCount++;     
+                man.deathCount++; 
+                
+               
               }
               else{
                 var indices = getIndices(secretWord,letter)
@@ -184,9 +194,11 @@ document.onkeyup = function(event){
                 hist.pop(); 
 
               }
-              update();
+                setTimeout(function() {
+                    update();
+                }, 500);
 
-           }
+             }
    
 			
 }
