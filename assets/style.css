@@ -11,10 +11,17 @@ body{
     background: #333333aa;
 }
 .modal{
-    font-family: 'Gloria Hallelujah', cursive;
     background: #333333aa
 }
-p{
+p,h2{
+    font-family: 'Sriracha', cursive;
+    font-size: 1.3em;
+}
+#hung{
+    color:red;
+    margin-left: 5px;
+    vertical-align: baseline;
+    font-family: 'Sriracha', cursive;
     font-size: 1.4em;
 }
 h1{
