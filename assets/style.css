@@ -1,0 +1,30 @@
+*{
+    box-sizing: border-box;
+    font-family: 'Gloria Hallelujah', cursive;
+    user-select:none;
+    text-transform: upperCase;
+}
+html,body{
+    height: 100%;
+}
+body{
+    background: #333333aa;
+}
+h1{
+    font-size: 2.6em;
+    font-family: 'Sriracha', cursive;
+    color:#000;
+    background: #fff;
+    user-select: none;
+  }
+  span{padding: 40px;}
+li{
+    display: inline-block;
+    padding-right: 20px;
+    font-size: 3em;
+   
+}
+
+.border{
+    border: 2px solid #121212aa
+}
