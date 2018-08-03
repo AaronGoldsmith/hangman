@@ -4,7 +4,7 @@
  const MAX_LIVES = 6;
  let progressWord = [];
  var canvas;
-
+var gameover = false;
 class Man
 {
   	constructor(x,y){
@@ -123,8 +123,8 @@ function setup() {
 
 }
 function reset(){
-
-	man = new Man(width/2,height/2-50);
+		gameover = false;
+		man = new Man(width/2,height/2-50);
     secretWord = wordlist.get().split("");
 		hist = [];
 		for(var j = 0;j<secretWord.length;j++){
@@ -213,13 +213,15 @@ document.onkeyup = function(event){
              update();
        }, 200);
 	 }
-	 else if(man.deathCount>=MAX_LIVES){
+	 if(man.deathCount>=MAX_LIVES){
+		 gameover=true;
 		$('#winlose').append($("<h1>").text("YOU LOSE" ))
 		$('#results').append($("<p>").text("the word was:  " + arrStr(secretWord)));
 		$('#winlose').attr("class","bg-danger")
 		$('#gameover').modal('show')
 	}
 	if(progressWord.indexOf("-")==-1){
+		gameover=true;
 		$('#winlose').append($("<h1>").text("YOU WIN!!!!"));
 		$('#winlose').attr("class","bg-success")
 
