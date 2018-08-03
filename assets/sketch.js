@@ -117,15 +117,20 @@ function setup() {
   strokeWeight(2);
   stroke(0);
   rect(0,0,width,height);
+	reset()
 
+ 
 
-  man = new Man(width/2,height/2-50);
-  secretWord = wordlist.get().split("");
-  for(var j = 0;j<secretWord.length;j++){
-  	progressWord.push("-");
-  }  
 }
+function reset(){
 
+	man = new Man(width/2,height/2-50);
+    secretWord = wordlist.get().split("");
+		hist = [];
+		for(var j = 0;j<secretWord.length;j++){
+			progressWord.push("-");
+		} 
+}
 function draw() {
   background(255);
   man.display(); 
@@ -173,15 +178,23 @@ function getIndices(arr,lettr){
     return ind;
  }
  
-
-
+function hasLives(){
+	return man.deathCount<MAX_LIVES;
+}
+function arrStr(arr){
+	var str = "";
+	for(var i = 0;i<arr.length;i++){
+		str+=arr[i];
+	}
+	return str;
+}
  
 document.onkeyup = function(event){
         var letter = event.key
         // check if letter is in alphabet 
 				// check if letter has been pressed already
 		
-		if(checkLetter(letter)){
+		if(checkLetter(letter) && hasLives()){
     	hist.push(letter);
       if(secretWord.indexOf(letter)==-1){
       	man.deathCount++; 
@@ -200,17 +213,25 @@ document.onkeyup = function(event){
              update();
        }, 200);
 	 }
-	 if(man.deathCount>=MAX_LIVES){
-		$('#winlose').html("<h1>YOU LOSE!!!!</h1>")
-		$('#winlose').modal()
-		return;
+	 else if(man.deathCount>=MAX_LIVES){
+		$('#winlose').append($("<h1>").text("YOU LOSE" ))
+		$('#results').append($("<p>").text("the word was:  " + arrStr(secretWord)));
+		$('#winlose').attr("class","bg-danger")
+		$('#gameover').modal('show')
 	}
 	if(progressWord.indexOf("-")==-1){
-		$('#winlose').html("<h1>YOU WIN!!!!</h1>")
-		$('#winlose').modal()
-		return;
+		$('#winlose').append($("<h1>").text("YOU WIN!!!!"));
+		$('#winlose').attr("class","bg-success")
+
+		$('#gameover').modal('show')
 	}
-   
+   $(document).on("click","#Playagain",function(){
+		 $('#gameover').modal('dispose');
+		 progressWord = []
+		 hist = [];
+		 man = new Man();
+		 canvas.clear();
+	 })
 			
 }
 		

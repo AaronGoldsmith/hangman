@@ -24,13 +24,23 @@
                 <div class="row d-flex flex-row-reverse mb-5" >
                         <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">How To Play</button>
                         <!-- Modal -->
-                        <div id="winlose" class="modal-body text-center">
-            
-                         </div>
+                    
+                         <div id="gameover" class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                                <div class="modal-dialog modal-dialog-centered" role="document">
+                                  <div class="modal-content">
+                                    <div class="modal-body">
+                                      <!-- ... dynamically add content -->
+                                      <p id="winlose"></p>
+                                      <span id="results"></span>
+                                    </div>
+                                    <div class="modal-footer">
+                                      <button type="button"  id="Playagain" onclick="location.reload()" data-dismiss="modal" class="btn btn-primary">Play Again</button>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
                         <div id="myModal" class="modal fade" role="dialog">
                           <div class="modal-dialog modal-lg">
-                        
-                            <!-- Modal content-->
                             <div class="modal-content">
                               <div class="modal-header ">
                                 <h2 class="modal-title m-0 " style="font-size: 2em;">Instructions</h2>
@@ -77,5 +87,8 @@
                 $("#myModal").modal();
             });
             update();
+            $("#PlayAgain").click(function(){
+                reset();
+            })
         });
     </script>
