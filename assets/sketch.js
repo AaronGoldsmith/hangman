@@ -1,8 +1,10 @@
  var wordlist = new wordList();
  let alph = "abcdefghijklmnopqrstuvwxyz";	
  let hist = [];
+ const MAX_LIVES = 6;
  let progressWord = [];
  var canvas;
+
 class Man
 {
   	constructor(x,y){
@@ -110,7 +112,7 @@ function drawNoose(x,y){
 }
 function setup() {
 
-  canvas = createCanvas(400, 400);
+  canvas = createCanvas(444, 444);
   canvas.parent('canvas-holder');
   strokeWeight(2);
   stroke(0);
@@ -119,7 +121,6 @@ function setup() {
 
   man = new Man(width/2,height/2-50);
   secretWord = wordlist.get().split("");
-//   console.log(secretWord); // use for testing
   for(var j = 0;j<secretWord.length;j++){
   	progressWord.push("-");
   }  
@@ -140,6 +141,11 @@ function checkLetter(L){
     return (alph.indexOf(L)>=0 && hist.indexOf(L)<0 && progressWord.indexOf(L)<0);
 }
 
+function displayResults(){
+	if(man.deathCount >= MAX_LIVES){
+
+	}
+}
 
 function update(){
     var h = "";
@@ -173,32 +179,37 @@ function getIndices(arr,lettr){
 document.onkeyup = function(event){
         var letter = event.key
         // check if letter is in alphabet 
-        // check if letter has been pressed already
-		if(checkLetter(letter) && man.deathCount<=5){
-              hist.push(letter);
-              console.log(letter)
+				// check if letter has been pressed already
+		
+		if(checkLetter(letter)){
+    	hist.push(letter);
+      if(secretWord.indexOf(letter)==-1){
+      	man.deathCount++; 
+      }
+      else{
+      	 var indices = getIndices(secretWord,letter)
+         for(var index = 0;index< indices.length;index++){
+            progressWord[indices[index]] = letter;
+          }
+         // don't want user to see a letter that they correctly guessed
+        // next to all the ones they guessed incorrectly
+       hist.pop(); 
 
-              
-              if(secretWord.indexOf(letter)==-1){
-                man.deathCount++; 
-                
-               
-              }
-              else{
-                var indices = getIndices(secretWord,letter)
-                for(var index = 0;index< indices.length;index++){
-                    progressWord[indices[index]] = letter;
-                }
-                // don't want user to see a letter that they correctly guessed
-                // next to all the ones they guessed incorrectly
-                hist.pop(); 
-
-              }
-                setTimeout(function() {
-                    update();
-                }, 500);
-
-             }
+     }
+      setTimeout(function() {
+             update();
+       }, 200);
+	 }
+	 if(man.deathCount>=MAX_LIVES){
+		$('#winlose').html("<h1>YOU LOSE!!!!</h1>")
+		$('#winlose').modal()
+		return;
+	}
+	if(progressWord.indexOf("-")==-1){
+		$('#winlose').html("<h1>YOU WIN!!!!</h1>")
+		$('#winlose').modal()
+		return;
+	}
    
 			
 }

@@ -24,6 +24,9 @@
                 <div class="row d-flex flex-row-reverse mb-5" >
                         <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">How To Play</button>
                         <!-- Modal -->
+                        <div id="winlose" class="modal-body text-center">
+            
+                         </div>
                         <div id="myModal" class="modal fade" role="dialog">
                           <div class="modal-dialog modal-lg">
                         
@@ -56,17 +59,17 @@
                 <div class="col-md-6 mt-5">
                     
                     <h3 class="mb-2">Solved :</h3>
-                    <!-- using &nbsp; to force a whitespace (creates the frame for the #solvedWord and #history) -->
-                    <div class="row"><ul id="solvedWord" class=" rounded float-left border bg-light mb-3"><li>&nbsp;</li></ul></div>
+                    <div class="row"><ul id="solvedWord" class=" rounded float-left border bg-light pl-0 mb-3"></ul></div>
                     <br><br>
                     <h3>Incorrect :</h3>
-                    <div class="row pt-3"><ul id="history" class= "rounded float-left border bg-light"><li>&nbsp;</li>
+                    <div class="row"><ul id="history" class= "rounded pt-3 float-left border bg-light">
                     </ul>
 
                 </div>
             </div>
            
         </div>
+        
     </body>
     <script type="text/javascript">
       $(document).ready(function(){
