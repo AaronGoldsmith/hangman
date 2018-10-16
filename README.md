@@ -1,7 +1,7 @@
 # Classic hangman
 This classic hangman game was created for homework assignment #3 
 
- ![](https:////i.imgur.com/DeXdRLJ.png)
+ ![](https://i.imgur.com/DeXdRLJ.png)
 
 ### How to play
 (Instructions can be displayed at any time within the game window)
