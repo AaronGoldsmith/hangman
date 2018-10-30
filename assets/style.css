@@ -1,22 +1,38 @@
-*{
+* {
     box-sizing: border-box;
     font-family: 'Gloria Hallelujah', cursive;
     user-select:none;
     text-transform: upperCase;
 }
-html,body{
-    height: 100%;
+
+html,body{height: 100%}
+body{ background: #333333aa}
+
+canvas{ border: 1px solid rgba(100,0,20,0.125);
+        box-shadow: 0px 0px 5px 2px #000
 }
-body{
-    background: #333333aa;
-}
-.modal{
-    background: rgba(51, 51, 51, 0.308)
-}
-p,h2{
+
+p, h2{ font: 1.3em 'Sriracha', cursive;}
+
+h1{
+    
+    font-size: 2.6em;
     font-family: 'Sriracha', cursive;
-    font-size: 1.3em;
+    color:#000;
+    background: #fff;
+    user-select: none;
 }
+#winlose h2{
+    width: auto;
+}
+
+li{
+    display: inline-block;
+    padding: 0 10px;
+    font-size: 3em;
+}
+
+
 #hung{
     color:red;
     margin-left: 5px;
@@ -24,33 +40,21 @@ p,h2{
     font-family: 'Sriracha', cursive;
     font-size: 1.4em;
 }
-h1{
-    font-size: 2.6em;
-    font-family: 'Sriracha', cursive;
-    color:#000;
-    background: #fff;
-    user-select: none;
-  }
-li{
-    display: inline-block;
-    padding: 0 10px;
-    font-size: 3em;
-   
-}
+
 
 .border{
     border: 3px solid #121212;
     box-shadow: 0px 3px 15px 2px #000
 }
-canvas{
-    border: 1px solid rgba(100,0,20,0.125);
-    box-shadow: 0px 0px 5px 2px #000
-}
 
-#history{
-    width: 100%;
-    height: 90px;
-}
-#winlose{
-    text-align: center;
-}
+.modal{ background: rgba(51, 51, 51, 0.308)}
+
+button.help {position: absolute; right: 30px; top: 20px; width: 30px; height: 30px;}
+button.help:hover{
+     border:1px solid #fff;
+     margin-top: -5px;
+     text-rendering: geometricPrecision;
+     transition: 0.1s ease-in}
+#history{ width: 100%; height: 90px;}
+#winlose,#results{ text-align: center }
+#results{width: 50%; text-overflow:ellipsis}

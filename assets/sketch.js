@@ -4,7 +4,9 @@
  const MAX_LIVES = 6;
  let progressWord = [];
  var canvas;
-var gameover = false;
+ var secretWord; 
+
+ var gameover = false;
 class Man
 {
   	constructor(x,y){
@@ -67,21 +69,19 @@ class Man
 				
 		}
 	}
-  display(){
-   
+  display(){ 
 	  for(var i =0;i<=this.deathCount;i++){
-		strokeWeight(4)
-		stroke(0);
-		fill(255)
-		this.whatDraw(i);
+			strokeWeight(4)
+			stroke(0);
+			fill(255)
+			this.whatDraw(i);
 	  }
   }
 
 
 }
 
-var man;
-var secretWord; 
+let man;
 function drawHanger(){
   	strokeWeight(8);
     stroke(0);
@@ -94,24 +94,20 @@ function drawHanger(){
   	rect(10,0,-70,10);
     pop();
 }
-function drawNoose(x,y){
-  	    strokeWeight(1)
+function drawRope(x,y){
+  	  strokeWeight(1)
   		stroke(0);
   		fill("#fb7410aa");
 		
   		for(var i = 0;i<21;i+=3){
-			ellipse(x,y-5+i,20,3);
-		}
-    	// vertically hanging  rope
+			  ellipse(x,y-5+i,20,3);
+		  }
+    	// vertically hanging rope
   		strokeWeight(6);
   		stroke("#fb7410aa");
   		line(x,y-79,x,25);
-		
-
-	
 }
 function setup() {
-
   canvas = createCanvas(444, 444);
   canvas.parent('canvas-holder');
   strokeWeight(2);
@@ -119,45 +115,36 @@ function setup() {
   rect(0,0,width,height);
 	reset()
 
- 
-
 }
 function reset(){
 		gameover = false;
 		man = new Man(width/2,height/2-50);
-    secretWord = wordlist.get().split("");
+    secretWord = wordlist.get().split('');
 		hist = [];
 		for(var j = 0;j<secretWord.length;j++){
 			progressWord.push("-");
 		} 
+		pauseAndUpdate();
 }
 function draw() {
   background(255);
   man.display(); 
   drawHanger()
-  drawNoose(width/2,height/2-20)
+  drawRope(width/2,height/2-20)
   fill(0);
   noStroke();
-
-  
 }
 
 function checkLetter(L){
-    return (alph.indexOf(L)>=0 && hist.indexOf(L)<0 && progressWord.indexOf(L)<0);
-}
-
-function displayResults(){
-	if(man.deathCount >= MAX_LIVES){
-
-	}
+    return (alph.includes(L) && hist.indexOf(L)<0 && progressWord.indexOf(L)<0);
 }
 
 function update(){
     var h = "";
     var p = "";
     if(hist.length==0){
-        document.querySelector("#history").innerHTML = "<p> Type a letter to see if it's in the word </p>";
-
+				let ptext = "<p> Type a letter to see if it's in the word </p>"
+        $("#history").html(ptext);
     }
     hist.forEach(letter => {
         h += ("<li class='text-danger'>"+ letter+"</li>");
@@ -165,38 +152,62 @@ function update(){
     progressWord.forEach(char =>{
         p += ("<li class='text-success'>"+char+"</li>");
     });
-     document.querySelector("#history").innerHTML = h;
-     document.querySelector("#solvedWord").innerHTML = p;
+     $("#history").html(h);
+     $("#solvedWord").html(p);
 }
+
 function getIndices(arr,lettr){
     var ind = [];
     for(var i = 0;i<arr.length;i++){
-     if(arr[i]==lettr){
-       ind.push(i);
-     }	
+      if(arr[i]==lettr) ind.push(i);	
     }
     return ind;
- }
+}
  
 function hasLives(){
 	return man.deathCount<MAX_LIVES;
 }
-function arrStr(arr){
-	var str = "";
-	for(var i = 0;i<arr.length;i++){
-		str+=arr[i];
-	}
-	return str;
+
+function pauseAndUpdate(){
+	setTimeout(function() {
+		update();
+	}, 5);
 }
- 
+function displayMeta(){
+	if(man.deathCount>=MAX_LIVES){
+		gameover=true;
+	 $('#winlose').html($("<h1>").text("YOU LOSE" ))
+	 $('#results').html($("<p>").text(`the word was:  ${secretWord.join("")}`));
+	 $('#winlose').attr("class","bg-danger")
+	 $('#gameover').modal('show')
+ }
+ if(progressWord.indexOf("-")==-1){
+	 gameover=true;
+	 $('#winlose').html($("<h2>").text("Great Job!"));
+	 $('#winlose').append($('<h2>').text('your word was'))
+	 $('#results').html($('<h3>').text(secretWord.join("")))
+	 $('#results').attr("class","bg-success")
+	 $('#gameover').modal('show')
+ }
+	$(document).on("click","#Playagain",function(){
+		$('#gameover').modal('dispose');
+		reset();
+		canvas.clear();
+
+	})
+}
+	
+
+/*
+	1. 		check if letter is in alphabet, hasn't been pressed
+	2.    check if still playing
+	3.    prevent player from seeing letters they correctly guessed adjacent to ones they incorrectly guessed
+*/
 document.onkeyup = function(event){
-        var letter = event.key
-        // check if letter is in alphabet 
-				// check if letter has been pressed already
-		
+		var letter = event.key
 		if(checkLetter(letter) && hasLives()){
     	hist.push(letter);
-      if(secretWord.indexOf(letter)==-1){
+      if(!secretWord.includes(letter)){
       	man.deathCount++; 
       }
       else{
@@ -204,37 +215,11 @@ document.onkeyup = function(event){
          for(var index = 0;index< indices.length;index++){
             progressWord[indices[index]] = letter;
           }
-         // don't want user to see a letter that they correctly guessed
-        // next to all the ones they guessed incorrectly
        hist.pop(); 
-
      }
-      setTimeout(function() {
-             update();
-       }, 200);
+      pauseAndUpdate();
 	 }
-	 if(man.deathCount>=MAX_LIVES){
-		 gameover=true;
-		$('#winlose').append($("<h1>").text("YOU LOSE" ))
-		$('#results').append($("<p>").text("the word was:  " + arrStr(secretWord)));
-		$('#winlose').attr("class","bg-danger")
-		$('#gameover').modal('show')
-	}
-	if(progressWord.indexOf("-")==-1){
-		gameover=true;
-		$('#winlose').append($("<h1>").text("YOU WIN!!!!"));
-		$('#winlose').attr("class","bg-success")
-
-		$('#gameover').modal('show')
-	}
-   $(document).on("click","#Playagain",function(){
-		 $('#gameover').modal('dispose');
-		 progressWord = []
-		 hist = [];
-		 man = new Man();
-		 canvas.clear();
-	 })
-			
+		displayMeta();
 }
 		
 	 

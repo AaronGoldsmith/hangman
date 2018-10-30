@@ -1,8 +1,6 @@
 # hangman
-hangman for HW-3
+Hangman Game.
+HW-3 UC Berkeley Extension Boot Camp
 
- todo: 
- - ~~fix double letters~~
- - add feet, face, hat
- - ~~add instructions~~
- - ~~add win / lose screen~~
+Updated for responsiveness 
+
