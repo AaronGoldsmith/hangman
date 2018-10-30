@@ -119,7 +119,8 @@ function setup() {
 function reset(){
 		gameover = false;
 		man = new Man(width/2,height/2-50);
-    secretWord = wordlist.get().split('');
+		const secret = wordlist.get()
+		secretWord = secret.split('');
 		hist = [];
 		for(var j = 0;j<secretWord.length;j++){
 			progressWord.push("-");
@@ -171,7 +172,7 @@ function hasLives(){
 function pauseAndUpdate(){
 	setTimeout(function() {
 		update();
-	}, 50);
+	}, 500);
 }
 function displayMeta(){
 	if(man.deathCount>=MAX_LIVES){
@@ -192,8 +193,8 @@ function displayMeta(){
 	$(document).on("click","#Playagain",function(){
 		$('#gameover').modal('dispose');
 		reset();
+		progressWord="";
 		canvas.clear();
-		pauseAndUpdate();
 	})
 }
 	
