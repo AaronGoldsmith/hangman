@@ -171,7 +171,7 @@ function hasLives(){
 function pauseAndUpdate(){
 	setTimeout(function() {
 		update();
-	}, 5);
+	}, 50);
 }
 function displayMeta(){
 	if(man.deathCount>=MAX_LIVES){
