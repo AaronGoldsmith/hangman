@@ -193,7 +193,7 @@ function displayMeta(){
 		$('#gameover').modal('dispose');
 		reset();
 		canvas.clear();
-
+		pauseAndUpdate();
 	})
 }
 	
