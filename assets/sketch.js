@@ -1,7 +1,7 @@
  var wordlist = new wordList();
  let alph = "abcdefghijklmnopqrstuvwxyz";	
  let hist = [];
- const MAX_LIVES = 6;
+ const MAX_LIVES = 8;
  let progressWord = [];
  var canvas;
  var secretWord; 
@@ -64,7 +64,14 @@ class Man
 				rotate(-15);
 				line(0,0,0,80);
 				pop(); return;
-			
+			case(7):
+				push(); translate(this.x,this.y+165);
+				line(20,0,27,3);
+				pop(); return;
+			case(8):
+				push(); translate(this.x,this.y+165);
+				line(-20,0,-27,3);
+				pop(); return;
 		  default: return;
 				
 		}
@@ -172,7 +179,7 @@ function hasLives(){
 function pauseAndUpdate(){
 	setTimeout(function() {
 		update();
-	}, 500);
+	}, 100);
 }
 function displayMeta(){
 	if(man.deathCount>=MAX_LIVES){
