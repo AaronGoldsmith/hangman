@@ -1,5 +1,5 @@
 # Classic hangman
-This classic hangman game was created for homework assignment #3 
+This hangman game was developed during the Coding Boot Camp. This was project #3 
 
 ### How to play
 (Instructions can be displayed at any time within the game window)
